@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Votação Grêmio Estudantil</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #1e3c72, #2a5298);
+      color: #f0f0f0;
+      text-align: center;
+      padding: 30px;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 38px;
+      margin-bottom: 25px;
+      color: #fff;
+      text-shadow: 2px 2px 4px #000;
+    }
+
+    h2, h3 {
+      color: #fff;
+    }
+
+    input[type="password"] {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+      width: 220px;
+    }
+
+    button {
+      padding: 12px 24px;
+      margin: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      background-color: #ffffff;
+      color: #2a5298;
+      cursor: pointer;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #2a5298;
+      color: #fff;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #votos {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+      display: none;
+      box-shadow: 0 0 12px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+  <h1>Votação Grêmio Estudantil</h1>
+  <div id="senhaDiv">
+    <p>Digite a senha para votar:</p>
+    <input type="password" id="senhaInput" placeholder="Senha">
+    <button onclick="verificarSenha()">Entrar</button>
+  </div>
+
+  <div id="votacao" class="hidden">
+    <h2>Escolha um grêmio:</h2>
+    <button onclick="votar('Poder Jovem 82')">Poder Jovem 82</button>
+    <button onclick="votar('Chapa Quente 66')">Chapa Quente 66</button>
+    <button onclick="votar('Visão de um futuro promissor 10')">Visão de um futuro promissor 10</button>
+
+    <div id="votos">
+      <h3>Votos computados:</h3>
+      <p>Poder Jovem 82: <span id="votoA">0</span></p>
+      <p>Chapa Quente 66: <span id="votoB">0</span></p>
+      <p>Visão de um futuro promissor 10: <span id="votoC">0</span></p>
+    </div>
+
+    <button onclick="revelarVotos()">Revelar Votos</button>
+  </div>
+
+  <audio id="somVoto" src="voto.wav"></audio>
+
+  <script>
+    let votos = {
+      'Poder Jovem 82': 0,
+      'Chapa Quente 66': 0,
+      'Visão de um futuro promissor 10': 0
+    };
+
+    function verificarSenha() {
+      const senha = document.getElementById("senhaInput").value;
+      if (senha === "Gremio325") {
+        document.getElementById("senhaDiv").classList.add("hidden");
+        document.getElementById("votacao").classList.remove("hidden");
+      } else {
+        alert("Senha incorreta!");
+      }
+    }
+
+    function votar(gremio) {
+      votos[gremio]++;
+      document.getElementById("votoA").textContent = votos['Poder Jovem 82'];
+      document.getElementById("votoB").textContent = votos['Chapa Quente 66'];
+      document.getElementById("votoC").textContent = votos['Visão de um futuro promissor 10'];
+      document.getElementById("votacao").classList.add("hidden");
+      document.getElementById("senhaDiv").classList.remove("hidden");
+      document.getElementById("senhaInput").value = "";
+      document.getElementById("somVoto").play();
+    }
+
+    function revelarVotos() {
+      const divVotos = document.getElementById("votos");
+      if (divVotos.style.display === "none" || divVotos.classList.contains("hidden")) {
+        divVotos.style.display = "block";
+      } else {
+        divVotos.style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>
